@@ -28,7 +28,7 @@ links = ["https://assets-bucket.deadlock-api.com/assets-api-res/images/heroes/as
 HERO_API_URL = "https://assets.deadlock-api.com/v2/heroes"
 
 # The folder where images will be saved, relative to the backend directory
-OUTPUT_FOLDER = "assets/hero_images"
+OUTPUT_FOLDER = "assets_hero_images"
 
 # --- Script ---
 

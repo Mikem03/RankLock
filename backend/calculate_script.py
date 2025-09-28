@@ -81,7 +81,7 @@ if __name__ == "__main__":
         print("Starting hero stats calculation...")
 
         query = MatchesData.query.order_by(MatchesData.start_time.desc())
-        matchdata = query.limit(10000).all()
+        matchdata = query.limit(15000).all()
 
         calculate_defaultbatch(matchdata)
 

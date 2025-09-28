@@ -1,5 +1,46 @@
 import React, { useState, useEffect, useMemo } from 'react';
-//import { SortBy } from './HeroSortBy';
+
+
+const getHeroImage = (dbName) => {
+  const nameMap = {
+    "Infernus": "inferno",
+    "Seven": "gigawatt",
+    "Vindicta": "hornet",
+    "Lady Geist": "spectre",
+    "Abrams": "bull",
+    "Wraith": "wraith",
+    "McGinnis": "engineer",
+    "Paradox": "chrono",
+    "Dynamo": "sumo",
+    "Kelvin": "kelvin",
+    "Haze": "haze",
+    "Holliday": "astro",
+    "Bebop": "bebop",
+    "Calico": "nano",
+    "Grey Talon": "archer",
+    "Mo & Krill": "digger",
+    "Shiv": "shiv",
+    "Ivy": "tengu",
+    "Warden": "warden",
+    "Yamato": "yamato",
+    "Lash": "lash",
+    "Viscous": "viscous",
+    "Pocket": "synth",
+    "Mirage": "mirage",
+    "Vyper": "vyper",
+    "Sinclair": "magician",
+    "Mina": "vampirebat",
+    "Drifter": "drifter",
+    "Victor": "frank",
+    "Paige": "bookworm",
+    "The Doorman": "doorman",
+    "Billy": "punkgoat",
+  };
+  console.log(dbName);
+  console.log(nameMap[dbName]);
+  return nameMap[dbName];
+};
+
 const SortBy = ({ onSortChange }) => {
   
   const handleChange = (event) => {
@@ -98,9 +139,7 @@ const HeroStats = () => {
       <h2>Hero Statistics</h2>
       
       {/* Filtering Controls */}
-      <div className="filters-panel">
-        <h3>Filter by Rank</h3>
-        
+      <div className="filters-panel">        
         <div className="filter-group">
           <label>Minimum Rank: {getRankName(filters.minRank)}</label>
           <input
@@ -154,7 +193,15 @@ const HeroStats = () => {
           <tbody>
             {sortedHeroes.map(hero => (
               <tr key={hero.id}>
-                <td>{hero.name}</td>
+                <td className="hero-cell">
+                  <img
+                    src={`/hero_icons/${getHeroImage(hero.name)}_sm.png`}
+                    alt={hero.name}
+                    className="hero-icon"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                  <span>{hero.name}</span>
+                </td>
                 <td>{(hero.pickrate * 100).toFixed(2)}%</td>
                 <td>{(hero.winrate * 100).toFixed(2)}%</td>
               </tr>

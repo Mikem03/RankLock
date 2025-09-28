@@ -18,8 +18,8 @@ function App() {
 
   return (
     <div className='App'>
+      <img src="/logo.png" alt="RankLock Logo" className="logo" />
       <h1>RankLock</h1>
-      <p>{message}</p>
       <HeroStats />
     </div>
   );

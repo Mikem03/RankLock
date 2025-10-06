@@ -1,6 +1,8 @@
 import json
 from collections import defaultdict
 
+UNRELEASED_HEROES = {61, 53, 48}
+
 def calculate_filteredbatch(db_matches):
     hero_stats = get_picks_wins(db_matches)
     total_matches = len(db_matches)
@@ -30,6 +32,9 @@ def get_picks_wins(matches):
 
         for player in players_data:
             hero_id = player["hero_id"]
+
+            if hero_id in UNRELEASED_HEROES:
+                continue
             player_team = player["team"]
 
             hero_stats[hero_id]["picks"] += 1

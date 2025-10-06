@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import HeroStats from './components/HeroStats';
+import MainContainer from './components/MainContainer';
 import './index.css'
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
   return (
     <div className='App'>
       <img src="/logo.png" alt="RankLock Logo" className="logo" />
-      <h1>RankLock</h1>
-      <HeroStats />
+      <h1 className="main-header">RankLock</h1>
+      <MainContainer />
     </div>
   );
 }

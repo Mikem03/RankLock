@@ -7,6 +7,7 @@ class MatchesData(db.Model):
     winning_team = db.Column(db.Integer, nullable=False)
     average_rank = db.Column(db.Float)
     players_data = db.Column(db.Text, nullable=False)
+    items_data = db.Column(db.Text, nullable=True)
 
 class HeroStats(db.Model):
     __tablename__ = 'hero_stats'

@@ -13,7 +13,7 @@ db.init_app(app)
 def fetch_matches(limit=10000):    
     try:
         matches = requests.get(
-            f"https://api.deadlock-api.com/v1/matches/metadata?limit={limit}&order_by=start_time&order_direction=desc&include_player_info=true"
+            f"https://api.deadlock-api.com/v1/matches/metadata?limit={limit}&order_direction=desc&min_average_badge=1&include_player_info=true"
         ).json()
         
         print(f"Retrieved {len(matches)} matches from API")
@@ -31,19 +31,24 @@ def fetch_matches(limit=10000):
                     continue
 
                 start_time = datetime.strptime(match["start_time"], "%Y-%m-%d %H:%M:%S")
-                team1rank = match["average_badge_team0"]
-                team2rank = match["average_badge_team1"]
-                if team1rank is None and team2rank is None:
-                    avg_rank = None
-                else:
-                    avg_rank = (team1rank + team2rank) / 2.0
+                team1rank = match.get("average_badge_team0") or 0
+                team2rank = match.get("average_badge_team1") or 0
+                avg_rank = (team1rank + team2rank) / 2.0
+
+                match_items = {}
+                for player in match.get("players", []):
+                    account_id = player.get("account_id")
+                    items = player.get("items", [])
+                    if account_id:
+                        match_items[str(account_id)] = items
 
                 new_match = MatchesData(
                     match_id=match_id,
                     start_time=start_time,
                     winning_team=match["winning_team"],
                     average_rank=avg_rank,
-                    players_data=json.dumps(match["players"])
+                    players_data=json.dumps(match["players"]),
+                    items_data=json.dumps(match_items)
                 )
                 db.session.add(new_match)
                 new_matches += 1

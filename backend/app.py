@@ -26,6 +26,17 @@ def serve_static(path):
      else:
         return send_from_directory(app.static_folder, 'index.html')  
      
+UNRELEASED_HEROES = {"Trapper", "Kali", 
+                     "Gunslinger", "The Boss", 
+                     "Tokamak", "Wrecker", 
+                     "Rutger", "Thumper", 
+                     "Fathom", "Cadence",
+                     "Bomber", "Shield Guy",
+                     "Vandal", "Raven",
+                     "Venator", "Boho",
+                     "Skyrunner", "Swan",
+                     "Druid", "Graf", "Fortuna"
+                     }
 
 @app.route("/heroes")
 def list_heroes():
@@ -35,6 +46,8 @@ def list_heroes():
 
         heroes_added = 0
         for hero in heroes:
+            if hero["name"] in UNRELEASED_HEROES:
+                continue
             existing_hero = HeroStats.query.filter_by(hero_id=hero["id"]).first()
             if not existing_hero:
                 new_hero = HeroStats(
@@ -161,6 +174,11 @@ RANK_MAPPING = {
 def get_ranks():
     ranks = [{"rank_id": rank_id, "rank_name": rank_name} for rank_id, rank_name in RANK_MAPPING.items()]
     return jsonify(ranks)
+
+
+@app.route("/images/<path:filename>")
+def get_image(filename):
+    return send_from_directory("assets/hero_icons", filename)
 
 if __name__ == '__main__':
     with app.app_context():

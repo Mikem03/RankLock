@@ -1,14 +1,12 @@
 import json
 import requests 
-from flask import Flask
+import sys
+from ranklock_app import create_app
 from database import db
-from models import MatchesData
+from ranklock_app.models import MatchesData
 from datetime import datetime
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ranklock.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+app = create_app()
 
 def fetch_matches(limit=10000):    
     try:
@@ -67,14 +65,8 @@ def fetch_matches(limit=10000):
     return True
 
 if __name__ == "__main__":
-    print("Starting daily match fetch...")
-    
     with app.app_context():
-        db.create_all() 
-    
-    success = fetch_matches(limit=10000)
-    
-    if success:
-        print("Daily match fetch completed successfully!")
-    else:
-        print("Daily match fetch failed!")
+        if len(sys.argv) > 1 and sys.argv[1] == 'fetch':
+            fetch_matches()
+        else:
+            print("Please provide a command. Usage: python manage_data.py fetch")

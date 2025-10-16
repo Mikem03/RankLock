@@ -21,7 +21,7 @@ const MainContainer = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/ranks")
+        fetch("/api/ranks")
             .then(res => res.json())
             .then(data => setRanks(data))
             .catch(err => setError("Failed to load ranks"));
@@ -36,7 +36,7 @@ const MainContainer = () => {
             if (currentFilters.minRank != null) params.append("min_rank", currentFilters.minRank * 10);
             if (currentFilters.maxRank != null) params.append("max_rank", currentFilters.maxRank * 10 + 9);
 
-            const response = await fetch(`http://localhost:5000/view-heroes?${params}`);
+            const response = await fetch(`/api/view-heroes?${params}`);
             const data = await response.json();              
             
             setHeroes(data.heroes || []);

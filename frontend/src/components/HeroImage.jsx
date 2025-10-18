@@ -46,7 +46,7 @@ export const HeroNameCellRenderer = (params) => {
     return (
       <div className="hero-cell" style={{ display: 'flex', alignItems: 'center' }}>
         <img
-          src={`/api/hero_icons/${heroImage}_sm.png`}
+          src={`/hero_icons/${heroImage}_sm.png`}
           alt={heroName}
           style={{ width: '24px', height: '24px', marginRight: '8px' }}
           onError={(e) => { e.target.style.display = 'none'; }}
